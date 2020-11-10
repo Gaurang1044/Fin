@@ -36,7 +36,7 @@ class FaceAging(object):
                  tile_ratio=1.0,  # ratio of the length between tiled label and z
                  is_training=True,  # flag for training or testing mode
                  save_dir='./save',  # path to save checkpoints, samples, and summary
-                 dataset_name='Face_Dataset'  # name of the dataset in the folder ./data
+                 dataset_name='UTKFace'  # name of the dataset in the folder ./data
                  ):
 
         self.session = session
@@ -284,8 +284,8 @@ class FaceAging(object):
         ) * self.image_value_range[0]
         for i, label in enumerate(sample_files):
 #  TO CHANGE: 
-            label = int(str(sample_files[i]).split('\\')[-1].split('_')[0])
-            # label = int(str(sample_files[i]).split('/')[-1].split('_')[0])
+            # label = int(str(sample_files[i]).split('\\')[-1].split('_')[0])
+            label = int(str(sample_files[i]).split('/')[-1].split('_')[0])
             if 0 <= label <= 5:
                 label = 0
             elif 6 <= label <= 10:
@@ -308,8 +308,8 @@ class FaceAging(object):
                 label = 9
             sample_label_age[i, label] = self.image_value_range[-1]
 #  TO CHANGE:
-            gender = int(str(sample_files[i]).split('\\')[-1].split('_')[1])
-            # gender = int(str(sample_files[i]).split('/')[-1].split('_')[1])
+            # gender = int(str(sample_files[i]).split('\\')[-1].split('_')[1])
+            gender = int(str(sample_files[i]).split('/')[-1].split('_')[1])
             sample_label_gender[i, gender] = self.image_value_range[-1]
 
         # ******************************************* training *******************************************************
@@ -362,8 +362,8 @@ class FaceAging(object):
                 ) * self.image_value_range[0]
                 for i, label in enumerate(batch_files):
 #  TO CHANGE:
-                    label = int(str(sample_files[i]).split('\\')[-1].split('_')[0])
-                    # label = int(str(batch_files[i]).split('/')[-1].split('_')[0])
+                    # label = int(str(sample_files[i]).split('\\')[-1].split('_')[0])
+                    label = int(str(batch_files[i]).split('/')[-1].split('_')[0])
                     if 0 <= label <= 5:
                         label = 0
                     elif 6 <= label <= 10:
@@ -386,9 +386,8 @@ class FaceAging(object):
                         label = 9
                     batch_label_age[i, label] = self.image_value_range[-1]
              #  TO CHANGE:
-                    gender = int(str(sample_files[i]).split('\\')[-1].split('_')[1])
-
-                    # gender = int(str(batch_files[i]).split('/')[-1].split('_')[1])
+                    # gender = int(str(sample_files[i]).split('\\')[-1].split('_')[1])
+                    gender = int(str(batch_files[i]).split('/')[-1].split('_')[1])
                     batch_label_gender[i, gender] = self.image_value_range[-1]
 
                 # prior distribution on the prior of z
@@ -680,7 +679,7 @@ class FaceAging(object):
             os.makedirs(test_dir)
         #  TO CHANGE:
         images = images[:int(np.sqrt(self.size_batch)), :, :, :]
-        
+   
         gender = gender[:int(np.sqrt(self.size_batch)), :]
         
         size_sample = images.shape[0]
@@ -728,7 +727,9 @@ class FaceAging(object):
             print("\tSUCCESS ^_^")
 
         num_samples = int(np.sqrt(self.size_batch))
-        file_names =glob(os.path.join('./test', '*.jpg')) #glob(testing_samples_dir)
+#TO CHANGE:
+        # file_names =glob(os.path.join('./test', '*.jpg')) 
+        file_names  = glob(testing_samples_dir)
         if len(file_names) < num_samples:
             print ('The number of testing images is must larger than %d' % num_samples)
             exit(0)
